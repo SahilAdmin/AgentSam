@@ -5,11 +5,14 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
     AudioSource audioSource;
+
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float thrust = 100f;
+
     [SerializeField] AudioClip thrustSound;
     [SerializeField] AudioClip explosionSound;
     [SerializeField] AudioClip successSound;
+
     [SerializeField] ParticleSystem thrustParticle;
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] ParticleSystem successParticle;
@@ -34,7 +37,7 @@ public class Rocket : MonoBehaviour
         }        
     }
 
-    private void OnCollisionEnter(Collision collision)
+     void OnCollisionEnter(Collision collision)
     {
         if (currentState != States.Alive)
             return;
@@ -42,10 +45,11 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                print("OK");
+                print("ok");
                 break;
 
             case "Finish":
+                print("finish");
                 StartSuccessSequence();
                 break;
 
@@ -57,6 +61,8 @@ public class Rocket : MonoBehaviour
 
     private void StartSuccessSequence()
     {
+        currentState = States.Trancending;
+        thrustParticle.Stop();
         audioSource.Stop();        
         audioSource.PlayOneShot(successSound);
         successParticle.Play();
@@ -65,8 +71,9 @@ public class Rocket : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        audioSource.Stop();
         currentState = States.Dying;
+        audioSource.Stop();
+        thrustParticle.Stop();
         audioSource.PlayOneShot(explosionSound);
         explosionParticle.Play();
         Invoke("LoadLevelAfterCollision", 2f);
@@ -83,12 +90,11 @@ public class Rocket : MonoBehaviour
     }
 
     private void RespondToThrustInput()
-    {
-        float thrustPerFrame = thrust * Time.deltaTime;
+    {        
 
         if (Input.GetKey(KeyCode.Space)) // can thrust while rotating
         {
-            ApplyThrust(thrustPerFrame);
+            ApplyThrust();
         }
 
         else
@@ -98,14 +104,16 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void ApplyThrust(float thrustPerFrame)
-    {
-        rigidBody.AddRelativeForce(Vector3.up * thrustPerFrame);
+    private void ApplyThrust()
+    {        
+        float thrustPerFrame = thrust * Time.deltaTime;
+        rigidBody.AddRelativeForce(Vector3.up * thrustPerFrame);        
 
         if (!audioSource.isPlaying) // So it does not layer up.
             audioSource.PlayOneShot(thrustSound);
 
         thrustParticle.Play();
+
     }
 
     private void RespondToRotationInput()
