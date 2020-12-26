@@ -17,7 +17,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] ParticleSystem successParticle;
 
-    enum States { Alive, Trancending, Dying};
+    enum States { Alive, Transcending1, Transcending2, Dying};
     States currentState = States.Alive;
 
     // Start is called before the first frame update
@@ -53,15 +53,30 @@ public class Rocket : MonoBehaviour
                 StartSuccessSequence();
                 break;
 
+            case "Finish2":
+                StartSuccessSeqence2();
+                break;
+
+
             default:
                 StartDeathSequence();
                 break;
         }
-    }   
+    }
+
+    private void StartSuccessSeqence2()
+    {
+        currentState = States.Transcending2;
+        thrustParticle.Stop();
+        audioSource.Stop();
+        audioSource.PlayOneShot(successSound);
+        successParticle.Play();
+        Invoke("LoadNextLevel1", 2f);
+    }
 
     private void StartSuccessSequence()
     {
-        currentState = States.Trancending;
+        currentState = States.Transcending1;
         thrustParticle.Stop();
         audioSource.Stop();        
         audioSource.PlayOneShot(successSound);
@@ -78,7 +93,12 @@ public class Rocket : MonoBehaviour
         explosionParticle.Play();
         Invoke("LoadLevelAfterCollision", 2f);
     }
-    
+
+    private void LoadNextLevel1()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     private void LoadNextLevel()
     {        
         SceneManager.LoadScene(1);
