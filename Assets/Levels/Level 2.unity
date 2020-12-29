@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.26635566, g: 0.26635566, b: 0.26635566, a: 1}
-  m_AmbientEquatorColor: {r: 0.07227186, g: 0.07227186, b: 0.07227186, a: 1}
-  m_AmbientGroundColor: {r: 0.039546248, g: 0.039546248, b: 0.039546248, a: 1}
-  m_AmbientIntensity: 0
-  m_AmbientMode: 1
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -75,18 +75,18 @@ LightmapSettings:
     m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
-    m_PVRSampleCount: 500
+    m_PVRSampleCount: 512
     m_PVRBounces: 2
-    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentSampleCount: 256
     m_PVREnvironmentReferencePointCount: 2048
-    m_PVRFilteringMode: 2
-    m_PVRDenoiserTypeDirect: 0
-    m_PVRDenoiserTypeIndirect: 0
-    m_PVRDenoiserTypeAO: 0
+    m_PVRFilteringMode: 1
+    m_PVRDenoiserTypeDirect: 1
+    m_PVRDenoiserTypeIndirect: 1
+    m_PVRDenoiserTypeAO: 1
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVREnvironmentMIS: 0
+    m_PVREnvironmentMIS: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -222,12 +222,12 @@ PrefabInstance:
     - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
         type: 3}
       propertyPath: m_Intensity
-      value: 30
+      value: 37.62
       objectReference: {fileID: 0}
     - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
         type: 3}
       propertyPath: m_SpotAngle
-      value: 47
+      value: 71
       objectReference: {fileID: 0}
     - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
         type: 3}
@@ -492,11 +492,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Landing Pad
-      objectReference: {fileID: 0}
-    - target: {fileID: 2817513603712844005, guid: 407d516be26eebd458fd9567d172d82b,
-        type: 3}
-      propertyPath: m_TagString
-      value: Finish2
       objectReference: {fileID: 0}
     - target: {fileID: 2892721594795113374, guid: 407d516be26eebd458fd9567d172d82b,
         type: 3}
@@ -3584,6 +3579,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Launch Pad
       objectReference: {fileID: 0}
+    - target: {fileID: 8539790411209118052, guid: df459e7dfbba59f4a9ae140b81b48605,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02204c814cd3f224d989a5a3bfda8f52, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df459e7dfbba59f4a9ae140b81b48605, type: 3}
 --- !u!1001 &3427109552194113266
@@ -3593,6 +3593,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9031239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9256928
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9339623
+      objectReference: {fileID: 0}
     - target: {fileID: 3427109551557442664, guid: d874de7148dafad4d9949f3164a84a52,
         type: 3}
       propertyPath: m_Enabled
