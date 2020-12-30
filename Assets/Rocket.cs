@@ -18,8 +18,10 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] ParticleSystem successParticle;    
 
-    enum States { Alive, Transcending1, Transcending2, Dying};  // todo remove level2
+    enum States { Alive, Transcending, Dying};  
     States currentState = States.Alive;
+
+    bool toggleCollision = true;
 
     // Start is called before the first frame update
     void Start()
@@ -35,18 +37,31 @@ public class Rocket : MonoBehaviour
         {
             RespondToThrustInput();
             RespondToRotationInput();
-        }        
+
+            RespondToDebugKeys();
+        }
     }
 
-     void OnCollisionEnter(Collision collision)
+    private void RespondToDebugKeys()
     {
-        if (currentState != States.Alive)
+        if (Input.GetKeyDown(KeyCode.L))
+            LoadNextLevel();
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            toggleCollision = !toggleCollision;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {        
+
+        if (currentState != States.Alive || !toggleCollision)
             return;
 
         switch (collision.gameObject.tag)
         {
-            case "Friendly":
-                print("ok");
+            case "Friendly":                
                 break;
 
             case "Finish":
@@ -54,30 +69,15 @@ public class Rocket : MonoBehaviour
                 StartSuccessSequence();
                 break;
 
-            case "Finish2":                   // todo remove finish 2.
-                StartSuccessSeqence2();
-                break;
-
-
             default:
                 StartDeathSequence();
                 break;
         }
     }
 
-    private void StartSuccessSeqence2()            // todo remove startsequence 2
-    {
-        currentState = States.Transcending2;
-        thrustParticle.Stop();
-        audioSource.Stop();
-        audioSource.PlayOneShot(successSound);
-        successParticle.Play();
-        Invoke("LoadNextLevel1", levelLoadDelay);
-    }
-
     private void StartSuccessSequence()
     {
-        currentState = States.Transcending1;
+        currentState = States.Transcending;
         thrustParticle.Stop();
         audioSource.Stop();        
         audioSource.PlayOneShot(successSound);
@@ -93,16 +93,18 @@ public class Rocket : MonoBehaviour
         audioSource.PlayOneShot(explosionSound);
         explosionParticle.Play();
         Invoke("LoadLevelAfterCollision", levelLoadDelay);
-    }
-
-    private void LoadNextLevel1()
-    {
-        SceneManager.LoadScene(2);
-    }
+    }    
 
     private void LoadNextLevel()
-    {        
-        SceneManager.LoadScene(1);
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        if ((nextSceneIndex) % SceneManager.sceneCountInBuildSettings == 0)
+            nextSceneIndex = 0;       
+
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     private void LoadLevelAfterCollision()
