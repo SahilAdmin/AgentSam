@@ -38,6 +38,7 @@ public class Rocket : MonoBehaviour
             RespondToThrustInput();
             RespondToRotationInput();
 
+            if (Debug.isDebugBuild)
             RespondToDebugKeys();
         }
     }
